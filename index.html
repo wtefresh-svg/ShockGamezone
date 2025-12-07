@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHOCK GAMEZONE - Premium Gaming Lounge Warsaw</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00ffff;
+            --secondary: #ff00ff;
+            --tertiary: #00ff88;
+            --dark: #0a0a0a;
+            --dark-lighter: #1a1a2e;
+            --text: #e0e0e0;
+            --text-dark: #a0a0a0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #0a0a1a 50%, #000000 100%);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ANIMATIONS */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(20px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.5), 0 0 40px rgba(0, 255, 255, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 255, 255, 0.8), 0 0 80px rgba(255, 0, 255, 0.4); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes neon-flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary), 0 0 30px var(--secondary), 0 0 40px var(--secondary);
+            }
+            20%, 24%, 55% {
+                text-shadow: 0 0 5px var(--primary);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        /* LANGUAGE SWITCHER */
+        .lang-switcher {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            z-index: 999;
+            display: flex;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 12px 16px;
+            border-radius: 30px;
+            border: 2px solid var(--primary);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 2px solid var(--text-dark);
+            color: var(--text);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-weight: bold;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: #000;
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+            font-weight: 900;
+        }
+
+        /* HEADER */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid var(--primary);
+            z-index: 900;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 40px rgba(0, 255, 255, 0.2);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: neon-flicker 3s infinite, float 3s ease-in-out infinite;
+            letter-spacing: 3px;
+        }
+
+        nav {
+            display: flex;
+            gap: 3rem;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.4s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .contact-btn {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: #000;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 900;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 20px 60px rgba(0, 255, 255, 0.6);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            height: 120vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 100px;
+            position: relative;
+            overflow: hidden;
+            padding: 0 5%;
+            gap: 4rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.15), transparent);
+            border-radius: 50%;
+            top: 20%;
+            left: 5%;
+            animation: float 6s ease-in-out infinite;
+            filter: blur(60px);
+            z-index: 0;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 0, 255, 0.1), transparent);
+            border-radius: 50%;
+            bottom: 10%;
+            right: 10%;
+            animation: float 7s ease-in-out infinite;
+            filter: blur(50px);
+            z-index: 0;
+        }
+
+        .hero-content {
+            flex: 1;
+            z-index: 1;
+            animation: slideInLeft 1.2s ease;
+        }
+
+        .hero h1 {
+            font-size: 5.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--tertiary), var(--primary));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInLeft 1s ease;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--text);
+            animation: slideInLeft 1.2s ease 0.1s both;
+            line-height: 1.6;
+        }
+
+        .features {
+            margin: 2.5rem 0;
+            animation: fadeInUp 1.3s ease 0.2s both;
+        }
+
+        .features li {
+            list-style: none;
+            margin: 1rem 0;
+            padding-left: 2.5rem;
+            position: relative;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .features li:before {
+            content: '⚡';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 1.3rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            animation: fadeInUp 1.4s ease 0.3s both;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1.3rem 3.5rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-weight: 900;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--tertiary));
+            color: #000;
+            box-shadow: 0 15px 40px rgba(0, 255, 255, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 60px rgba(0, 255, 255, 0.5);
+        }
+
+        .btn-secondary {
+            border: 3px solid var(--primary);
+            color: var(--primary);
+            background: rgba(0, 255, 255, 0.05);
+            box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 255, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: inset 0 0 30px rgba(0, 255, 255, 0.2), 0 0 40px rgba(0, 255, 255, 0.4);
+        }
+
+        .hero-image {
+            flex: 1;
+            z-index: 2;
+            animation: slideInRight 1.2s ease;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 30px 80px rgba(0, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            animation: float 4s ease-in-out infinite;
+            transition: all 0.4s ease;
+        }
+
+        .hero-image img:hover {
+            box-shadow: 0 40px 100px rgba(0, 255, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border-color: var(--primary);
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 7rem 5%;
+            max-width: 1600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        section h2 {
+            font-size: 3.5rem;
+            margin-bottom: 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        /* ABOUT */
+        .about {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-text {
+            animation: slideInLeft 1s ease;
+        }
+
+        .about-text p {
+            font-size: 1.2rem;
+            line-height: 2;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .about-text .highlight {
+            color: var(--primary);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .about-image {
+            animation: slideInRight 1s ease;
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 30px 80px rgba(0, 255, 255, 0.3);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        .about-image img:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 40px 100px rgba(0, 255, 255, 0.5);
+            border-color: var(--primary);
+        }
+
+        /* SERVICES */
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.05), rgba(255, 0, 255, 0.02));
+            border: 2px solid rgba(0, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: fadeInUp 0.8s ease;
+            animation-fill-mode: both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:nth-child(1) { animation-delay: 0.1s; }
+        .service-card:nth-child(2) { animation-delay: 0.2s; }
+        .service-card:nth-child(3) { animation-delay: 0.3s; }
+        .service-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
+            transition: left 0.7s ease;
+            z-index: 1;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .service-card:hover {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.15), rgba(255, 0, 255, 0.08));
+            transform: translateY(-15px);
+            box-shadow: 0 30px 70px rgba(0, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .service-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .service-card h3 {
+            font-size: 1.7rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .service-card p {
+            color: var(--text-dark);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* EQUIPMENT */
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .equipment-item {
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.05), rgba(0, 255, 255, 0.02));
+            border: 2px solid rgba(255, 0, 255, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: fadeInUp 0.8s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .equipment-item:hover {
+            border-color: var(--secondary);
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.15), rgba(0, 255, 255, 0.08));
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 30px 70px rgba(255, 0, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .equipment-item h4 {
+            color: var(--secondary);
+            margin-bottom: 1.2rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .equipment-item p {
+            color: var(--text-dark);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        /* PRICING */
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.08), rgba(255, 0, 255, 0.04));
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 255, 255, 0.2);
+            border: 2px solid rgba(0, 255, 255, 0.2);
+            margin-top: 4rem;
+        }
+
+        .pricing-table th {
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--tertiary));
+            color: #000;
+            padding: 2rem;
+            text-align: left;
+            font-weight: 900;
+            font-size: 1.15rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .pricing-table td {
+            padding: 1.8rem 2rem;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+            color: var(--text);
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .pricing-table tr:hover {
+            background: rgba(0, 255, 255, 0.1);
+        }
+
+        .price-highlight {
+            color: var(--primary);
+            font-weight: 900;
+            font-size: 1.3rem;
+        }
+
+        /* GAMES */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .game-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            aspect-ratio: 1;
+            cursor: pointer;
+            animation: fadeInUp 0.8s ease;
+            border: 2px solid transparent;
+            transition: all 0.4s ease;
+        }
+
+        .game-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.3), rgba(255, 0, 255, 0.2));
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .game-item:hover::before {
+            opacity: 1;
+        }
+
+        .game-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+            filter: brightness(0.7) saturate(0.8);
+        }
+
+        .game-item:hover img {
+            transform: scale(1.15) rotate(3deg);
+            filter: brightness(1) saturate(1.2);
+        }
+
+        .game-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
+            padding: 2rem 1rem 1rem;
+            color: var(--primary);
+            font-weight: 900;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 3;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .game-item:hover .game-name {
+            opacity: 1;
+        }
+
+        /* LOCATIONS */
+        .locations {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .location-card {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.08), rgba(255, 0, 255, 0.04));
+            border: 2px solid rgba(0, 255, 255, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            animation: fadeInUp 0.8s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .location-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 30px 80px rgba(0, 255, 255, 0.3);
+            transform: translateY(-10px);
+        }
+
+        .location-image {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .location-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: all 0.4s ease;
+        }
+
+        .location-card:hover .location-image img {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .location-image::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .location-info {
+            padding: 3rem;
+        }
+
+        .location-info h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            font-weight: 900;
+        }
+
+        .location-info p {
+            color: var(--text-dark);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .social-media {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-media a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            background: rgba(0, 255, 255, 0.1);
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-media a:hover {
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        /* FOOTER */
+        footer {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(10, 10, 30, 0.95));
+            border-top: 2px solid var(--primary);
+            padding: 5rem 5%;
+            text-align: center;
+            color: var(--text-dark);
+            box-shadow: 0 -10px 40px rgba(0, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+        }
+
+        .footer-content p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-social a {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            background: rgba(0, 255, 255, 0.1);
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 1.6rem;
+            transition: all 0.4s ease;
+        }
+
+        .footer-social a:hover {
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.6);
+            transform: translateY(-10px) scale(1.2) rotate(15deg);
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        footer a:hover {
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .about {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                flex-direction: column;
+                padding: 0 3%;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            nav {
+                display: none;
+            }
+
+            section h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .lang-switcher {
+                top: 15px;
+                right: 15px;
+                gap: 5px;
+                padding: 8px 12px;
+            }
+
+            .lang-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+
+            header {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .contact-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.85rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            section {
+                padding: 4rem 3%;
+            }
+
+            .services {
+                grid-template-columns: 1fr;
+            }
+
+            .games-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .pricing-table th, .pricing-table td {
+                padding: 1rem 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .games-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LANGUAGE SWITCHER -->
+    <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="en" onclick="switchLanguage('en', this)">EN</button>
+        <button class="lang-btn" data-lang="pl" onclick="switchLanguage('pl', this)">PL</button>
+        <button class="lang-btn" data-lang="ru" onclick="switchLanguage('ru', this)">RU</button>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">⚡ SHOCK GAMEZONE</div>
+        <nav>
+            <a href="#about" data-en="About" data-pl="O Nas" data-ru="О клубе">About</a>
+            <a href="#equipment" data-en="Equipment" data-pl="Sprzęt" data-ru="Оборудование">Equipment</a>
+            <a href="#pricing" data-en="Pricing" data-pl="Ceny" data-ru="Цены">Pricing</a>
+            <a href="#games" data-en="Games" data-pl="Gry" data-ru="Игры">Games</a>
+            <a href="#locations" data-en="Location" data-pl="Lokacja" data-ru="Локация">Location</a>
+        </nav>
+        <a href="tel:+48123456789" class="contact-btn">📞 BOOK</a>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>SHOCK GAMEZONE</h1>
+            <p data-en="Next-Generation Gaming Experience in Warsaw" data-pl="Doświadczenie gier nowej generacji w Warszawie" data-ru="Игровой опыт нового поколения в Варшаве">Next-Generation Gaming Experience in Warsaw</p>
+            
+            <ul class="features">
+                <li data-en="Fast computers with high-quality equipment" data-pl="Szybkie komputery z wysokiej jakości sprzętem" data-ru="Быстрые компьютеры с высококачественным оборудованием">Fast computers with high-quality equipment</li>
+                <li data-en="Cozy gaming atmosphere" data-pl="Przytulna atmosfera gier" data-ru="Уютная атмосфера для игр">Cozy gaming atmosphere</li>
+                <li data-en="Tournaments and events" data-pl="Turnieje i imprezy" data-ru="Турниры и события">Tournaments and events for entertainment and development</li>
+                <li data-en="Analytics and coverage" data-pl="Analityka i relacja" data-ru="Аналитика и трансляция">Analytics and coverage of games</li>
+            </ul>
+
+            <div class="cta-buttons">
+                <a href="#locations" class="btn btn-primary" data-en="Reserve Now" data-pl="Zarezerwuj Teraz" data-ru="Забронировать">Reserve Now</a>
+                <a href="#about" class="btn btn-secondary" data-en="Learn More" data-pl="Dowiedz się więcej" data-ru="Узнать больше">Learn More</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://bau-architects.ru/wp-content/uploads/2021/04/r_gl.jpg" alt="Gaming PC Setup">
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+        <h2 data-en="About SHOCK GAMEZONE" data-pl="O SHOCK GAMEZONE" data-ru="О SHOCK GAMEZONE">About SHOCK GAMEZONE</h2>
+        <div class="about">
+            <div class="about-text">
+                <p data-en="Located in the heart of Warsaw (Ochota District), SHOCK GAMEZONE is your ultimate destination for premium gaming entertainment." data-pl="Położona w samym sercu Warszawy (dzielnica Ochota), SHOCK GAMEZONE jest twoją ostateczną destynacją dla premium'owej rozrywki" data-ru="Расположенный в самом сердце Варшавы (район Охота), SHOCK GAMEZONE - это ваш лучший выбор">Located in the heart of Warsaw (Ochota District), SHOCK GAMEZONE is your ultimate destination for premium gaming entertainment.</p>
+                
+                <p data-en="We provide state-of-the-art gaming rigs, comfortable seating, lightning-fast internet, and a vibrant community." data-pl="Zapewniamy nowoczesne zestawy do gier, wygodne siedzenia, błyskawicznie szybki internet i tętniącą życiem społeczność." data-ru="Мы предоставляем современное оборудование, удобные стулья, молниеносный интернет">We provide state-of-the-art gaming rigs, comfortable seating, lightning-fast internet, and a vibrant community.</p>
+
+                <div class="services">
+                    <div class="service-card">
+                        <div class="service-icon">💻</div>
+                        <h3 data-en="High-End PCs" data-pl="Komputery High-End" data-ru="Мощные ПК">High-End PCs</h3>
+                        <p data-en="RTX 4090, i9-14900K, 360Hz monitors" data-pl="RTX 4090, procesory i9-14900K, monitory 360Hz" data-ru="RTX 4090, i9-14900K, мониторы 360Hz">RTX 4090, i9-14900K, 360Hz monitors</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🎮</div>
+                        <h3 data-en="All Popular Games" data-pl="Wszystkie popularne gry" data-ru="Все популярные игры">All Games</h3>
+                        <p data-en="CS2, Valorant, Fortnite, etc.." data-pl="CS2, Valorant, Fortnite, etc.." data-ru="CS2, Valorant, Fortnite, etc..">CS2, Valorant, Fortnite, etc..</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🏆</div>
+                        <h3 data-en="Tournaments" data-pl="Turnieje" data-ru="Турниры">Tournaments</h3>
+                        <p data-en="Weekly competitions with prizes" data-pl="Cotygodniowe konkurencje z nagrodami" data-ru="Еженедельные соревнования">Weekly competitions with prizes</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🍕</div>
+                        <h3 data-en="Snack Bar" data-pl="Bar ze Snackami" data-ru="Снек-бар">Snack Bar</h3>
+                        <p data-en="Drinks & snacks available" data-pl="Napoje i przekąski dostępne" data-ru="Напитки и закуски">Drinks & snacks available</p>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image">
+                <img src="https://avatars.mds.yandex.net/get-altay/4716261/2a0000018fe49b0b63ed9520d72a9447c059/XL" alt="Club interior">
+            </div>
+        </div>
+    </section>
+
+    <!-- EQUIPMENT -->
+    <section id="equipment">
+        <h2 data-en="Premium Equipment" data-pl="Sprzęt Premium" data-ru="Премиум оборудование">Premium Equipment</h2>
+        <div class="equipment-grid">
+            <div class="equipment-item">
+                <h4>GPU</h4>
+                <p>NVIDIA RTX 4090<br>NVIDIA RTX 4080 Super</p>
+            </div>
+            <div class="equipment-item">
+                <h4>CPU</h4>
+                <p>Intel Core i9-14900K<br>AMD Ryzen 9 9950X</p>
+            </div>
+            <div class="equipment-item">
+                <h4>RAM</h4>
+                <p>DDR5 96GB<br>Kingston Fury Beast</p>
+            </div>
+            <div class="equipment-item">
+                <h4 data-en="Monitor" data-pl="Monitor" data-ru="Монитор">Monitor</h4>
+                <p>27" 360Hz 1ms<br>32" 240Hz 4K HDR</p>
+            </div>
+            <div class="equipment-item">
+                <h4 data-en="Keyboard" data-pl="Klawiatura" data-ru="Клавиатура">Keyboard</h4>
+                <p>Corsair K95 Platinum<br>SteelSeries Apex Pro</p>
+            </div>
+            <div class="equipment-item">
+                <h4 data-en="Mouse" data-pl="Mysz" data-ru="Мышь">Mouse</h4>
+                <p>Razer DeathAdder V3<br>Logitech G Pro X</p>
+            </div>
+            <div class="equipment-item">
+                <h4 data-en="Headset" data-pl="Słuchawki" data-ru="Гарнитура">Headset</h4>
+                <p>SteelSeries Arctis Pro<br>HyperX Cloud Alpha</p>
+            </div>
+            <div class="equipment-item">
+                <h4 data-en="Network" data-pl="Sieć" data-ru="Сеть">Network</h4>
+                <p>Fiber 1Gbps<br>Ultra-low latency</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing">
+        <h2 data-en="Pricing & Rates" data-pl="Ceny i stawki" data-ru="Цены и тарифы">Pricing & Rates</h2>
+        <table class="pricing-table">
+            <tr>
+                <th data-en="Time" data-pl="Czas" data-ru="Время">Time</th>
+                <th data-en="Open Space" data-pl="Otwarta Przestrzeń" data-ru="Открытое пространство">Open Space</th>
+                <th data-en="VIP Zone" data-pl="Strefa VIP" data-ru="VIP зона">VIP Zone</th>
+                <th data-en="Private Room" data-pl="Pokój Prywatny" data-ru="Приватная комната">Private Room</th>
+            </tr>
+            <tr>
+                <td data-en="1 hour" data-pl="1 godzina" data-ru="1 час">1 hour</td>
+                <td class="price-highlight">29 PLN</td>
+                <td class="price-highlight">39 PLN</td>
+                <td class="price-highlight">59 PLN</td>
+            </tr>
+            <tr>
+                <td data-en="3 hours" data-pl="3 godziny" data-ru="3 часа">3 hours</td>
+                <td class="price-highlight">79 PLN</td>
+                <td class="price-highlight">109 PLN</td>
+                <td class="price-highlight">149 PLN</td>
+            </tr>
+            <tr>
+                <td data-en="5 hours" data-pl="5 godzin" data-ru="5 часов">5 hours</td>
+                <td class="price-highlight">129 PLN</td>
+                <td class="price-highlight">179 PLN</td>
+                <td class="price-highlight">229 PLN</td>
+            </tr>
+            <tr>
+                <td data-en="Full Night (12h)" data-pl="Pełna noc (12h)" data-ru="Полная ночь (12ч)">Full Night (12h)</td>
+                <td class="price-highlight">249 PLN</td>
+                <td class="price-highlight">349 PLN</td>
+                <td class="price-highlight">449 PLN</td>
+            </tr>
+            <tr style="background: rgba(0, 255, 255, 0.1);">
+                <td data-en="Happy Hours" data-pl="Happy Hours" data-ru="Happy Hours">Happy Hours (17:00-21:00)</td>
+                <td class="price-highlight" style="color: #00ff88;">-40%</td>
+                <td class="price-highlight" style="color: #00ff88;">-35%</td>
+                <td class="price-highlight" style="color: #00ff88;">-30%</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- GAMES -->
+    <section id="games">
+        <h2 data-en="Available Games" data-pl="Dostępne gry" data-ru="Доступные игры">Available Games</h2>
+        <div class="games-grid">
+            <div class="game-item">
+                <img src="https://egamersworld.com/cdn-cgi/image/width=690,quality=75,format=webp/uploads/blog/1696414021417.webp" alt="CS2">
+                <span class="game-name">Counter-Strike 2</span>
+            </div>
+            <div class="game-item">
+                <img src="https://store-images.s-microsoft.com/image/apps.21507.13663857844271189.4c1de202-3961-4c40-a0aa-7f4f1388775a.20ed7782-0eda-4f9d-b421-4cc47492edc6" alt="Valorant">
+                <span class="game-name">Valorant</span>
+            </div>
+            <div class="game-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png" alt="Fortnite">
+                <span class="game-name">Fortnite</span>
+            </div>
+            <div class="game-item">
+                <img src="https://assetsio.gnwcdn.com/pubg-tips-tricks-guide-battlegrounds-4415-1513099928095.jpg?width=1200&height=1200&fit=crop&quality=100&format=png&enable=upscale&auto=webp" alt="PUBG">
+                <span class="game-name">PUBG</span>
+            </div>
+            <div class="game-item">
+                <img src="https://cdn1.epicgames.com/spt-assets/5dcd88f4e2094a698ebffa43438edc33/apex-legends-1mf51.jpg" alt="Apex">
+                <span class="game-name">Apex Legends</span>
+            </div>
+            <div class="game-item">
+                <img src="https://img.redbull.com/images/c_crop,w_1600,h_800,x_0,y_0/c_auto,w_1200,h_600/f_auto,q_auto/redbullcom/2022/8/1/ksfga6rlx2ugfhjd9vnk/league-of-legends" alt="LoL">
+                <span class="game-name">League of Legends</span>
+            </div>
+            <div class="game-item">
+                <img src="https://upload.wikimedia.org/wikipedia/ru/c/c8/GTAV_Official_Cover_Art.jpg" alt="GTA">
+                <span class="game-name">GTA 5</span>
+            </div>
+            <div class="game-item">
+                <img src="https://upload.wikimedia.org/wikipedia/ru/thumb/8/8e/%D0%9E%D0%B1%D0%BB%D0%BE%D0%B6%D0%BA%D0%B0_Dota_2.jpg/330px-%D0%9E%D0%B1%D0%BB%D0%BE%D0%B6%D0%BA%D0%B0_Dota_2.jpg" alt="Dota 2">
+                <span class="game-name">Dota 2</span>
+            </div>
+            <div class="game-item">
+                <img src="https://play-lh.googleusercontent.com/uPRFWFbiASqohiTMTKrD5gErGrKxq_1DgH0npRQcvUEDDLMLTECh3xXl0STPBZZseA" alt="CoD">
+                <span class="game-name">Call of Duty</span>
+            </div>
+            <div class="game-item">
+                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/252490/c05e66e166b0fc5fc2a06711d7bfa1b4cb2f45f6/capsule_616x353.jpg?t=1761667247" alt="Rust">
+                <span class="game-name">Rust</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOCATION -->
+    <section id="locations">
+        <h2 data-en="Visit Us" data-pl="Odwiedź nas" data-ru="Посетите нас">Visit Us</h2>
+        <div class="locations">
+            <div class="location-card">
+                <div class="location-image">
+                    <img src="https://img.freepik.com/premium-photo/futuristic-showcase-concept-empty-show-scene-abstract-geometric-glow-neon-background-technology-banner-product-display-scene-3d-render_91497-8531.jpg?semt=ais_hybrid&w=740&q=80" alt="SHOCK GAMEZONE">
+                </div>
+                <div class="location-info">
+                    <h3 data-en="SHOCK GAMEZONE Warsaw" data-pl="SHOCK GAMEZONE Warszawa" data-ru="SHOCK GAMEZONE Варшава">SHOCK GAMEZONE Warsaw</h3>
+                    <p><strong data-en="Address:" data-pl="Adres:" data-ru="Адрес:">Address:</strong><br>
+                        ul. Grójecka 109<br>
+                        02-155 Warszawa<br>
+                        (Ochota District)
+                    </p>
+                    <p><strong data-en="Hours:" data-pl="Godziny:" data-ru="Часы:">Hours:</strong><br>
+                        Mon-Thu: 2 PM - 2 AM<br>
+                        Fri-Sun: 12 PM - 4 AM
+                    </p>
+                    <p><strong data-en="Specs:" data-pl="Specyfikacja:" data-ru="Характеристики:">Specs:</strong><br>
+                        25 High-End Gaming PCs<br>
+                        4x PS5 Pro Console<br>
+                        Snack Bar & Lounge Area
+                    </p>
+                    <p style="margin-top: 1.5rem;">
+                        <a href="tel:+48123456789" style="color: var(--primary); font-weight: 900; margin-right: 1rem;">📞 +48 (77) 777-77-77</a>
+                    </p>
+                    <div class="social-media">
+                        <a href="https://instagram.com/shockgamezone" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://telegram.me/shockgamezone" target="_blank" title="Telegram"><i class="fab fa-telegram"></i></a>
+                        <a href="https://tiktok.com/@shockgamezone" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://facebook.com/shockgamezone" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://discord.gg/shockgamezone" target="_blank" title="Discord"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GOOGLE MAPS -->
+    <section id="map" style="padding: 5rem 2rem; max-width: 1200px; margin: 0 auto;">
+        <h2 data-en="Find Us On Map" data-pl="Znajdź nas na mapie" data-ru="Найдите нас на карте">Find Us On Map</h2>
+        <div style="width: 100%; height: 500px; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 40px rgba(0, 255, 255, 0.2); border: 2px solid rgba(0, 255, 255, 0.3); animation: fadeInUp 0.8s ease; margin-top: 2rem;">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2441.5028476359556!2d21.009!3d52.209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471ecc8700000001%3A0x0!2sGr%C3%B3jecka%20109%2C%2002-155%20Warszawa!5e0!3m2!1sen!2spl!4v1234567890"
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <h3>⚡ SHOCK GAMEZONE</h3>
+            <p data-en="Next-Generation Gaming Experience" data-pl="Doświadczenie gier nowej generacji" data-ru="Опыт игр нового поколения">Next-Generation Gaming Experience</p>
+            
+            <div class="footer-social">
+                <a href="https://instagram.com/shockgamezone" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://telegram.me/shockgamezone" target="_blank" title="Telegram"><i class="fab fa-telegram"></i></a>
+                <a href="https://tiktok.com/@shockgamezone" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="https://facebook.com/shockgamezone" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://discord.gg/shockgamezone" target="_blank" title="Discord"><i class="fab fa-discord"></i></a>
+            </div>
+
+            <p data-en="Email: info@shockgamezone.pl" data-pl="Email: info@shockgamezone.pl" data-ru="Email: info@shockgamezone.pl">Email: <a href="mailto:info@shockgamezone.pl">info@shockgamezone.pl</a></p>
+            <p data-en="© 2025 SHOCK GAMEZONE. All rights reserved." data-pl="© 2025 SHOCK GAMEZONE. Wszelkie prawa zastrzeżone." data-ru="© 2025 SHOCK GAMEZONE. Все права защищены.">© 2025 SHOCK GAMEZONE. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function switchLanguage(lang, btn) {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+
+            document.querySelectorAll('[data-en]').forEach(element => {
+                const text = element.getAttribute(`data-${lang}`);
+                if (text) element.textContent = text;
+            });
+
+            localStorage.setItem('selectedLanguage', lang);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+            const btn = document.querySelector(`.lang-btn[data-lang="${savedLanguage}"]`);
+            if (btn) {
+                // apply texts and active state
+                switchLanguage(savedLanguage, btn);
+            }
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
